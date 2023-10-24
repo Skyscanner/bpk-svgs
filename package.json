@@ -53,7 +53,7 @@
     "@babel/register": "^7.12.1",
     "@skyscanner/bpk-foundations-common": "^6.4.0",
     "@skyscanner/bpk-foundations-web": "^17.3.0",
-    "@skyscanner/stylelint-config-skyscanner": "^6.0.0",
+    "@skyscanner/stylelint-config-skyscanner": "^10.2.0",
     "babel-loader": "^8.3.0",
     "del": "^5.0.0",
     "gulp": "^4.0.2",
