@@ -16,34 +16,36 @@
  * limitations under the License.
  */
 
-import { flow } from 'lodash';
+import lodash from 'lodash';
 import through from 'through2';
 import Vinyl from 'vinyl';
 
-import withAutoMirror from './automirror';
+import withAutoMirror from './automirror.js';
 
-type MetadataItem = {
-  autoMirror: boolean,
-};
+const {flow} = lodash;
 
-type Metadata = {
-  [string]: MetadataItem,
-};
+// type MetadataItem = {
+//   autoMirror: boolean,
+// };
 
-type MetadataModifier = (
-  icon: string,
-  data: $Shape<MetadataItem>, // eslint-disable-line no-undef
-) => $Shape<MetadataItem>; // eslint-disable-line no-undef
+// type Metadata = {
+//   [string]: MetadataItem,
+// };
+
+// type MetadataModifier = (
+//   icon: string,
+//   data: $Shape<MetadataItem>, // eslint-disable-line no-undef
+// ) => $Shape<MetadataItem>; // eslint-disable-line no-undef
 
 // Add all modifiers here
 const iconModifiers = [withAutoMirror()];
 
-const wrapWithIcon = (icon: string, modifiers: Array<MetadataModifier>) =>
+const wrapWithIcon = (icon, modifiers) =>
   modifiers.map((modifier) => (data) => modifier(icon, data));
 
-const withIcon = (icon: string) => flow(wrapWithIcon(icon, iconModifiers));
+const withIcon = (icon) => flow(wrapWithIcon(icon, iconModifiers));
 
-const createMetadata = (): Metadata => {
+const createMetadata = () => {
   const metadata = {};
 
   const bufferContents = (file, enc, cb) => {
@@ -72,4 +74,4 @@ const createMetadata = (): Metadata => {
 };
 
 export default createMetadata;
-export type { Metadata, MetadataItem, MetadataModifier };
+// export type { Metadata, MetadataItem, MetadataModifier };

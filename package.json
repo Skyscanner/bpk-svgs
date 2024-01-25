@@ -1,5 +1,10 @@
 {
   "name": "@skyscanner/bpk-svgs",
+  "type": "module",
+  "exports": {
+    "./dist/js/icons/lg/*": "./dist/js/icons/lg/*.js",
+    "./dist/js/icons/sm/*": "./dist/js/icons/sm/*.js"
+  },
   "version": "0.0.1",
   "description": "Backpack's library of SVG's.",
   "license": "Apache-2.0",

@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-const { Transform } = require('stream');
+import { Transform }  from 'stream';
 
-const { PluginError } = require('gulp-util');
-const loader = require('react-svg-loader');
+import gulputil from 'gulp-util';
+const { PluginError } = gulputil;
+import loader from 'react-svg-loader';
 
 const PLUGIN_NAME = 'svg2react';
-
-module.exports = (opts = {}) => {
+export default function run(opts = {}){
   const stream = new Transform({ objectMode: true });
 
   // eslint-disable-next-line no-underscore-dangle
@@ -65,4 +65,4 @@ module.exports = (opts = {}) => {
   };
 
   return stream;
-};
+}

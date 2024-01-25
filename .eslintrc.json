@@ -15,6 +15,7 @@
   "rules": {
     // Temorary disabling prettier due to a issue in linting. We will raise a separate issue to fix this.
     "prettier/prettier": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "import/extensions": ["always"]
   }
 }

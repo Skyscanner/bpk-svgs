@@ -19,14 +19,14 @@
 import fs from 'fs';
 import path from 'path';
 
-export default (codepointsPath: string) => {
+export default (codepointsPath) => {
   const absolutePath = path.join(process.cwd(), codepointsPath);
 
   const codepoints = fs.existsSync(absolutePath)
     ? JSON.parse(fs.readFileSync(absolutePath, 'utf8'))
     : {};
 
-  return (file: string, callback: (err: ?Error, obj: ?Object) => mixed) => {
+  return (file, callback) => {
     const basename = path.basename(file);
     const name = basename.replace('.svg', '');
 

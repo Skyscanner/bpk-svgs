@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /*
  * Backpack - Skyscanner's Design System
  *
@@ -16,15 +17,17 @@
  * limitations under the License.
  */
 
-import fs from 'fs';
-import path from 'path';
+import {readFileSync} from 'node:fs';
+import { join, dirname} from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-import { type MetadataModifier } from '.';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const infoFile = path.join(__dirname, 'auto-mirrored-icons.txt');
+const infoFile = join(__dirname, 'auto-mirrored-icons.txt');
 
-const withAutoMirrorData = (): MetadataModifier => {
-  const info = fs.readFileSync(infoFile, 'utf8').split('\n');
+const withAutoMirrorData = () => {
+  const info = readFileSync(infoFile, 'utf8').split('\n');
   return (icon, data) => ({
     ...data,
     autoMirror: !!info.find((i) => i === icon),
