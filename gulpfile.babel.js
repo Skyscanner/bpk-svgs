@@ -20,6 +20,7 @@ import fs from 'fs';
 import punycode from 'punycode';
 
 import del from 'del';
+import { rimraf } from 'rimraf';
 import gulp from 'gulp';
 import chmod from 'gulp-chmod';
 import clone from 'gulp-clone';
@@ -61,7 +62,7 @@ const svgoCommonPlugins = [
   { name: 'removeHiddenElems' },
 ];
 
-gulp.task('clean', () => del(['dist']));
+gulp.task('clean', () => rimraf(['dist']));
 
 const spinnerReactComponents = (size) => {
   const svgs = gulp.src(`src/spinners/**/${size}.svg`).pipe(chmod(0o644));
@@ -274,7 +275,7 @@ gulp.task('icons-font', () => {
   return merge(...saveFonts, saveMapping);
 });
 
-gulp.task('clean-up-font-svgs', () => del('dist/font/*.svg'));
+gulp.task('clean-up-font-svgs', () => rimraf('dist/font/*.svg', {glob: true}));
 
 // copy-svgs ignores those in `xl` as we don't want to make them available to web consumers.
 gulp.task('copy-svgs', () =>
