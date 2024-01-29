@@ -19,7 +19,6 @@
 import fs from 'fs';
 import punycode from 'punycode';
 
-import { rimraf } from 'rimraf';
 import gulp from 'gulp';
 import chmod from 'gulp-chmod';
 import clone from 'gulp-clone';
@@ -27,6 +26,7 @@ import iconfont from 'gulp-iconfont';
 import rename from 'gulp-rename';
 import svgmin from 'gulp-svgmin';
 import merge from 'merge-stream';
+import { rimraf } from 'rimraf';
 
 import tokens from '@skyscanner/bpk-foundations-web/tokens/base.raw.json';
 
