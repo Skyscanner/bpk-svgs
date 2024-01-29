@@ -19,7 +19,6 @@
 import fs from 'fs';
 import punycode from 'punycode';
 
-import del from 'del';
 import { rimraf } from 'rimraf';
 import gulp from 'gulp';
 import chmod from 'gulp-chmod';
