@@ -3,9 +3,9 @@ import Stream from "stream";
 
 import {transform} from '@svgr/core';
 import camelcase from 'camelcase';
-import { PluginError } from 'gulp-util';
+import gulpUtil from 'gulp-util';
 
-import template from './template.mjs';
+const { PluginError } = gulpUtil;
 
 const PLUGIN_NAME = "svgr"
 
@@ -55,8 +55,10 @@ export default function svgrPipe (options) {
     const stream = new Stream.Transform({
       objectMode: true
     });
+
+
   
-    // eslint-disable-next-line no-underscore-dangle
+    // eslint-disable-next-line no-underscore-dangle, consistent-return
     stream._transform = function streamTransform (file, encoding, cb) {
       if (file.isNull()) {
         return cb(null, file);
@@ -68,24 +70,25 @@ export default function svgrPipe (options) {
       
         
       if (file.isBuffer()) {
+        const componentName = path.basename(file.path).replace(".svg", "").concat("-icon"); // eg world--apac-icon
         transform(
             file.contents.toString(),
             { 
               icon: sizeMapping[options.size],
               plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
               svgoConfig: { plugins: svgoCommonPlugins },
-              svgProps: { fill: "{props.fill}" },
               typescript: true,
-              template
+              jsxRuntimeImport: {source: "react", defaultSpecifier: "React"},
             },
-            { componentName: camelcase(path.basename(file.path))},
+            { componentName: camelcase(componentName, {pascalCase: true})},
         ).then(jsCode => {
             // eslint-disable-next-line no-param-reassign
             file.contents = Buffer.from(jsCode);
             return cb(null, file);
         })
+      } else {
+        return cb(new PluginError(PLUGIN_NAME, 'Data type not supported'));
       }
-      return cb(new PluginError(PLUGIN_NAME, 'Data type not supported'));
     };
   
     return stream;

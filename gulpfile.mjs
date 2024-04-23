@@ -25,6 +25,7 @@ import chmod from 'gulp-chmod';
 import clone from 'gulp-clone';
 import iconfont from 'gulp-iconfont';
 import rename from 'gulp-rename';
+import ts from 'gulp-typescript';
 import merge from 'merge-stream';
 
 import getIconFontMetadataProvider from './tasks/getIconFontMetadataProvider.mjs';
@@ -34,23 +35,44 @@ import svgr from "./tasks/svgr.mjs";
 
 gulp.task('clean', () => del(['dist']));
 
-const spinnerReactComponents = (size) => {
-  const svgs = gulp.src(`src/spinners/**/${size}.svg`).pipe(chmod(0o644));
+const iconReactComponents = (type, size) => {
+    let src;
+    if(type === "icons") {src = `src/${type}/${size}/*.svg`}
+    if(type === "spinners") {src = `src/${type}/**/${size}.svg`}
 
-  return svgs
-    .pipe(clone())
-    .pipe(
-      svgr({size})
-    )
-    .pipe(rename({ extname: '.tsx' }))
-    .pipe(gulp.dest('dist/js/spinners'));
+    if(src === undefined){
+      throw new Error(`Unrecognised type: ${type}`);
+    }
+
+    const svgs = gulp.src(src).pipe(chmod(0o644));
+  
+    const tsResult = svgs
+      .pipe(clone())
+      .pipe(
+        svgr({size})
+      )
+      .pipe(rename({ extname: '.tsx' }))
+      .pipe(ts({
+        noImplicitAny: true,
+        jsx: "preserve",
+        target: "es2020",
+        module: "es2020",
+        declaration: true,
+        skipLibCheck: true,
+        allowSyntheticDefaultImports: true,
+      }));
+  
+     return merge(
+        tsResult.dts.pipe(gulp.dest(`dist/js/${type}`)),
+        tsResult.js.pipe(gulp.dest(`dist/js/${type}`)),
+      );
 };
 
 gulp.task('spinners', () =>
   merge(
-    spinnerReactComponents('sm'),
-    spinnerReactComponents('lg'),
-    spinnerReactComponents('xl'),
+    iconReactComponents('spinners', 'sm'),
+    iconReactComponents('spinners', 'lg'),
+    iconReactComponents('spinners', 'xl'),
   ),
 );
 
@@ -58,21 +80,8 @@ gulp.task('spinners', () =>
 //   ICONS
 // */
 
-const iconReactComponents = (size) => {
-  const svgs = gulp.src(`src/icons/${size}/**/*.svg`).pipe(chmod(0o644));
-
-  const react = svgs
-    .pipe(clone())
-    .pipe(
-      svgr({size})
-    )
-    .pipe(rename({ extname: '.tsx' }))
-    .pipe(gulp.dest(`dist/js/icons/${size}`));
-
-  return merge(react);
-};
 gulp.task('icons', () =>
-  merge(iconReactComponents('sm'), iconReactComponents('lg')),
+  merge(iconReactComponents('icons', 'sm'), iconReactComponents('icons', 'lg')),
 );
 
 gulp.task('prepare-for-icons-font', () =>
