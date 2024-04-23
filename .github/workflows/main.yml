@@ -28,7 +28,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Upload to Cache
-        uses: actions/cache@v3.3.3
+        uses: actions/cache@v4.0.2
         id: npm-cache
         with:
           path: |
@@ -54,6 +54,6 @@ jobs:
       pull-requests: read
     steps:
       - name: Draft release notes
-        uses: release-drafter/release-drafter@v5
+        uses: release-drafter/release-drafter@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

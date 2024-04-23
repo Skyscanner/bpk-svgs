@@ -19,7 +19,7 @@
 import fs from 'fs';
 import punycode from 'punycode';
 
-import del from 'del';
+import {deleteAsync} from 'del';
 import gulp from 'gulp';
 import chmod from 'gulp-chmod';
 import clone from 'gulp-clone';
@@ -33,7 +33,7 @@ import metadata from './tasks/metadata/index.mjs';
 import svgr from "./tasks/svgr.mjs";
 
 
-gulp.task('clean', () => del(['dist']));
+gulp.task('clean', () => deleteAsync(['dist']));
 
 const iconReactComponents = (type, size) => {
     let src;
@@ -175,7 +175,7 @@ gulp.task('icons-font', () => {
   return merge(...saveFonts, saveMapping);
 });
 
-gulp.task('clean-up-font-svgs', () => del('dist/font/*.svg'));
+gulp.task('clean-up-font-svgs', () => deleteAsync('dist/font/*.svg'));
 
 // copy-svgs ignores those in `xl` as we don't want to make them available to web consumers.
 gulp.task('copy-svgs', () =>
