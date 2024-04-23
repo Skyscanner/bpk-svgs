@@ -36,11 +36,17 @@ import svgr from "./tasks/svgr.mjs";
 gulp.task('clean', () => deleteAsync(['dist']));
 
 const iconReactComponents = (type, size) => {
-    let src;
-    if(type === "icons") {src = `src/${type}/${size}/*.svg`}
-    if(type === "spinners") {src = `src/${type}/**/${size}.svg`}
+    let src; let dest;
+    if(type === "icons") {
+      src = `src/${type}/${size}/*.svg`
+      dest = `dist/js/${type}/${size}`
+    }
+    if(type === "spinners") {
+      src = `src/${type}/**/${size}.svg`
+      dest = `dist/js/${type}`
+    }
 
-    if(src === undefined){
+    if(src === undefined || dest === undefined){
       throw new Error(`Unrecognised type: ${type}`);
     }
 
@@ -63,8 +69,8 @@ const iconReactComponents = (type, size) => {
       }));
   
      return merge(
-        tsResult.dts.pipe(gulp.dest(`dist/js/${type}`)),
-        tsResult.js.pipe(gulp.dest(`dist/js/${type}`)),
+        tsResult.dts.pipe(gulp.dest(dest)),
+        tsResult.js.pipe(gulp.dest(dest)),
       );
 };
 
