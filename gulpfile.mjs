@@ -26,6 +26,7 @@ import ordered from 'ordered-read-streams';
 
 import metadata from './tasks/metadata/index.mjs';
 import svgr from './tasks/svgr.mjs';
+import createIconMapping from './tasks/metadata/iconMapping.mjs';
 
 gulp.task('clean', () => deleteAsync(['dist']));
 
@@ -102,8 +103,10 @@ gulp.task('create-metadata', () =>
   gulp.src('src/icons/lg/*.svg').pipe(metadata()).pipe(gulp.dest('dist')),
 );
 
+gulp.task('create-iconmapping', createIconMapping);
+
 const allIcons = gulp.parallel('icons', 'copy-svgs');
 
 const allSpinners = gulp.task('spinners');
 
-gulp.task('default', gulp.parallel(allSpinners, allIcons, 'create-metadata'));
+gulp.task('default', gulp.series(gulp.parallel(allSpinners, allIcons, 'create-metadata'), 'create-iconmapping'));
