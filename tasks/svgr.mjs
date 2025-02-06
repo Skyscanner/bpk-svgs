@@ -9,43 +9,6 @@ const { PluginError } = gulpUtil;
 
 const PLUGIN_NAME = "svgr"
 
-const svgoCommonPlugins = [
-  { name: 'removeTitle' },
-  { name: 'preset-default' },
-  { name: 'removeStyleElement' },
-  { name: 'removeEmptyContainers' },
-  { name: 'sortAttrs' },
-  { name: 'removeUselessDefs' },
-  { name: 'removeEmptyText' },
-  { name: 'removeEditorsNSData' },
-  { name: 'removeEmptyAttrs' },
-  { name: 'removeHiddenElems' },
-  {
-    name: 'removeAttrs',
-    params: {
-      attrs: [
-        'id',
-        'class',
-        'data-name',
-        'fill',
-        'width',
-        'height',
-        'fill-rule',
-      ],
-    }
-  },
-  {
-    name: 'addAttributesToSVGElement',
-    params: {
-      attributes: [
-        {
-          'aria-hidden': true,
-        },
-      ],
-    }
-  }
-];
-
 export default function svgrPipe (options) {
   const sizeMapping = {
     sm: '1rem',
@@ -76,7 +39,7 @@ export default function svgrPipe (options) {
             { 
               icon: sizeMapping[options.size],
               plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
-              svgoConfig: { plugins: svgoCommonPlugins },
+              svgoConfig: { plugins: options.plugins },
               typescript: true,
               jsxRuntimeImport: {source: "react", defaultSpecifier: "React"},
             },

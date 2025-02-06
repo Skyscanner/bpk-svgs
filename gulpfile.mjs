@@ -24,22 +24,26 @@ import rename from 'gulp-rename';
 import ts from 'gulp-typescript';
 import ordered from 'ordered-read-streams';
 
-import metadata from './tasks/metadata/index.mjs';
-import svgr from './tasks/svgr.mjs';
 import createIconMapping from './tasks/metadata/iconMapping.mjs';
+import metadata from './tasks/metadata/index.mjs';
+import { iconsPlugins, spinnersPlugins } from './tasks/plugins.mjs';
+import svgr from './tasks/svgr.mjs';
 
 gulp.task('clean', () => deleteAsync(['dist']));
 
 const iconReactComponents = (type, size) => {
   let src;
   let dest;
+  let plugins;
   if (type === 'icons') {
     src = `src/${type}/${size}/*.svg`;
     dest = `dist/js/${type}/${size}`;
+    plugins = iconsPlugins;
   }
   if (type === 'spinners') {
     src = `src/${type}/**/${size}.svg`;
     dest = `dist/js/${type}`;
+    plugins = spinnersPlugins;
   }
 
   if (src === undefined || dest === undefined) {
@@ -50,7 +54,7 @@ const iconReactComponents = (type, size) => {
 
   const tsResult = svgs
     .pipe(clone())
-    .pipe(svgr({ size }))
+    .pipe(svgr({ size, plugins }))
     .pipe(rename({ extname: '.tsx' }))
     .pipe(
       ts({
