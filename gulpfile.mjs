@@ -97,7 +97,7 @@ gulp.task('icons', () =>
 gulp.task('copy-svgs', () =>
   ordered([
     gulp
-      .src(['src/**/*.svg', '!src/icons/xl/*.svg'])
+      .src(['src/**/*.svg'])
       .pipe(gulp.dest('dist/svgs')),
     gulp.src(['src/icons/icons.js']).pipe(gulp.dest('dist/svgs')),
   ]),
