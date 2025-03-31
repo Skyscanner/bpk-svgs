@@ -71,14 +71,14 @@ Once they're signed off, you can raise a request on our Backpack Requests board 
 <details>
 <summary>Create a pull request</summary>
 
-For anything non-trivial, we strongly recommend speaking to somebody from Clover before starting work on a PR. It might even be something we're already working on. After this, follow the steps below.
+For anything non-trivial, we strongly recommend speaking to the Backpack owners before starting work on a PR. It might even be something we're already working on. After this, follow the steps below.
 
 1. If you are a Skyscanner employee, follow the "Engineering Contribution" guide in the Backpack space in Confluence to get push rights to this repository. Otherwise, you should [fork the repository](https://github.com/Skyscanner/bpk-svgs/fork).
 2. Create a new branch.
 3. Make your changes.
 4. Commit and push your new branch.
 5. Submit a [pull request](https://github.com/Skyscanner/bpk-svgs/pulls).
-6. Notify someone in Clover squad or drop a note in #backpack.
+6. Contact the design system owners in #backpack.
 
 </details>
 
