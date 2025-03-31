@@ -90,14 +90,14 @@ gulp.task('icons', () =>
   ordered([
     iconReactComponents('icons', 'sm'),
     iconReactComponents('icons', 'lg'),
+    iconReactComponents('icons', 'xl'),
   ]),
 );
 
-// copy-svgs ignores those in `xl` as we don't want to make them available to web consumers.
 gulp.task('copy-svgs', () =>
   ordered([
     gulp
-      .src(['src/**/*.svg', '!src/icons/xl/*.svg'])
+      .src(['src/**/*.svg'])
       .pipe(gulp.dest('dist/svgs')),
     gulp.src(['src/icons/icons.js']).pipe(gulp.dest('dist/svgs')),
   ]),
