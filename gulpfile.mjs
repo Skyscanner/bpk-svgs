@@ -23,11 +23,41 @@ import clone from 'gulp-clone';
 import rename from 'gulp-rename';
 import ts from 'gulp-typescript';
 import ordered from 'ordered-read-streams';
+import { optimize } from 'svgo';
+import through2 from 'through2';
 
 import createIconMapping from './tasks/metadata/iconMapping.mjs';
 import metadata from './tasks/metadata/index.mjs';
 import { iconsPlugins, spinnersPlugins } from './tasks/plugins.mjs';
 import svgr from './tasks/svgr.mjs';
+
+// Function to optimize SVGs using SVGO
+const optimizeSvg = (size) => gulp.src(`src/icons/${size}/**/*.svg`)
+  .pipe(chmod(0o644))
+  .pipe(through2.obj(function (file, enc, cb) {
+    if (file.isBuffer()) {
+      const svgContent = file.contents.toString();
+      const optimizedSvg = optimize(svgContent, {
+        path: file.path, plugins: [...iconsPlugins, {
+          name: 'addAttributesToSVGElement',
+          params: {
+            attributes: [
+              `viewBox="0 0 24 24"`,
+            ],
+          }
+        }]
+      });
+
+      if (optimizedSvg.data) {
+        // eslint-disable-next-line no-param-reassign
+        file.contents = Buffer.from(optimizedSvg.data);
+      }
+    }
+
+    this.push(file);
+    cb();
+  }))
+  .pipe(gulp.dest(`src/icons/${size}`));
 
 gulp.task('clean', () => deleteAsync(['dist']));
 
@@ -38,7 +68,20 @@ const iconReactComponents = (type, size) => {
   if (type === 'icons') {
     src = `src/${type}/${size}/*.svg`;
     dest = `dist/js/${type}/${size}`;
-    plugins = iconsPlugins;
+    plugins = [
+      ...iconsPlugins,
+      {
+        name: 'addAttributesToSVGElement',
+        params: {
+          attributes: [
+            `viewBox="0 0 24 24"`,
+            {
+              'aria-hidden': true,
+            }
+          ],
+        }
+      }
+    ];
   }
   if (type === 'spinners') {
     src = `src/${type}/**/${size}.svg`;
@@ -85,6 +128,13 @@ gulp.task('spinners', () =>
 // /*
 //   ICONS
 // */
+gulp.task('optimise-small-icons', () =>
+  optimizeSvg('sm')
+);
+
+gulp.task('optimise-large-icons', () =>
+  optimizeSvg('lg')
+);
 
 gulp.task('icons', () =>
   ordered([
@@ -109,7 +159,10 @@ gulp.task('create-metadata', () =>
 
 gulp.task('create-iconmapping', createIconMapping);
 
-const allIcons = gulp.parallel('icons', 'copy-svgs');
+const allIcons = gulp.series(
+  gulp.parallel('optimise-small-icons', 'optimise-large-icons'),
+  gulp.parallel('icons', 'copy-svgs')
+);
 
 const allSpinners = gulp.task('spinners');
 
