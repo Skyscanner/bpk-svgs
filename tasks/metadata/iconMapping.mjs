@@ -27,11 +27,11 @@ const createIconMapping = (cb) => {
   const lg = fs
     .readdirSync('./src/icons/lg')
     .map((name) => path.basename(name, '.svg'));
-  const xl = fs
-    .readdirSync('./src/icons/xl')
-    .map((name) => `${path.basename(name, '.svg')}-xl`);
+  const xxxl = fs
+    .readdirSync('./src/icons/xxxl')
+    .map((name) => `${path.basename(name, '.svg')}-xxxl`);
 
-  [sm, lg, xl].forEach((size) => {
+  [sm, lg, xxxl].forEach((size) => {
     size.forEach((iconName) => {
       iconMapping[iconName] = iconName;
     });

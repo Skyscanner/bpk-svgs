@@ -136,15 +136,15 @@ gulp.task('optimise-large-icons', () =>
   optimizeSvg('lg')
 );
 
-gulp.task('optimise-xlarge-icons', () =>
-  optimizeSvg('xl')
+gulp.task('optimise-xxxlarge-icons', () =>
+  optimizeSvg('xxxl')
 );
 
 gulp.task('icons', () =>
   ordered([
     iconReactComponents('icons', 'sm'),
     iconReactComponents('icons', 'lg'),
-    iconReactComponents('icons', 'xl'),
+    iconReactComponents('icons', 'xxxl'),
   ]),
 );
 

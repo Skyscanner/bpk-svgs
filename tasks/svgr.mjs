@@ -14,6 +14,8 @@ export default function svgrPipe (options) {
     sm: '1rem',
     lg: '1.5rem',
     xl: '2rem',
+    xxl: '2.5rem',
+    xxxl: '3rem',
   };
     const stream = new Stream.Transform({
       objectMode: true
