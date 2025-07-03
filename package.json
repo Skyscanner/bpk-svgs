@@ -62,7 +62,7 @@
     "jest": "^30.0.4",
     "lodash": "^4.17.20",
     "ordered-read-streams": "^2.0.0",
-    "svgo": "^3.3.2",
+    "svgo": "^4.0.0",
     "through2": "^4.0.2",
     "typescript": "^5.8.3"
   }
