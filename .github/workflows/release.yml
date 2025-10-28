@@ -39,6 +39,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: Publishing
     needs: [Create-NPM-Cache]
+    permissions:
+      id-token: write
+      contents: read
     steps:
     - name: Checkout source code
       uses: actions/checkout@v4
@@ -68,5 +71,4 @@ jobs:
         npm version $RELEASE_VERSION --no-git-tag-version
         npm publish
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         RELEASE_VERSION: ${{ github.event.release.tag_name }}
