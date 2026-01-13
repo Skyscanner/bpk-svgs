@@ -16,6 +16,8 @@ env:
   CACHE_NAME: node-modules-cache
   BUILD_CACHE_NAME: build-cache
 
+permissions: {}
+
 jobs:
   Create-NPM-Cache:
     runs-on: ubuntu-latest
