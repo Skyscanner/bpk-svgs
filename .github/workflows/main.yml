@@ -49,7 +49,6 @@ jobs:
       pull-requests: write
     needs: [Create-NPM-Cache]
     uses: ./.github/workflows/_build.yml
-    secrets: inherit
 
   ReleaseDraft:
     runs-on: ubuntu-latest
