@@ -12,9 +12,13 @@ updates:
       update-types: ['version-update:semver-patch']
   allow:
     - dependency-type: "direct"
+  cooldown:
+    default-days: 7
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: weekly
     time: "10:00"
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
