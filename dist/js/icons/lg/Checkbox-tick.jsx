@@ -1,5 +1,5 @@
 import React from 'react';
 const CheckboxTickIcon = (props) => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="1.5rem" height="1.5rem" {...props}>
-    <path d="M7.69 13.85a1.8 1.8 0 0 1-2.546-2.546l2.329-2.329a1.8 1.8 0 0 1 2.546 0l.881.881 5.42-5.42a1.8 1.8 0 0 1 2.546 2.546l-6.693 6.693a1.8 1.8 0 0 1-2.546 0L7.69 11.738l-.707.707a1.8 1.8 0 0 1-1.273.527z"/>
+    <path d="M10.2 17.73a1.8 1.8 0 0 1-1.273-.527L5.89 14.164a1.8 1.8 0 1 1 2.546-2.546l1.764 1.764 5.837-5.837a1.8 1.8 0 1 1 2.546 2.546l-7.11 7.11a1.8 1.8 0 0 1-1.273.527Z"/>
   </svg>);
 export default CheckboxTickIcon;
