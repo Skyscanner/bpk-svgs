@@ -64,6 +64,6 @@
     "ordered-read-streams": "^2.0.0",
     "svgo": "^4.0.0",
     "through2": "^4.0.2",
-    "typescript": "^5.8.3"
+    "typescript": "^6.0.2"
   }
 }
