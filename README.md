@@ -16,8 +16,9 @@ This package exposes Backpack SVGs in various formats:
 
 - React components
   ```
-  dist/js/icons/lg/*
+  dist/js/icons/xs/*
   dist/js/icons/sm/*
+  dist/js/icons/lg/*
   dist/js/spinners/*
   ```
 

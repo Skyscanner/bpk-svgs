@@ -61,12 +61,12 @@ const optimizeSvg = (size) => gulp.src(`src/icons/${size}/**/*.svg`)
 
 gulp.task('clean', () => deleteAsync(['dist']));
 
-const iconReactComponents = (type, size) => {
+const iconReactComponents = (type, size, artworkSize = size) => {
   let src;
   let dest;
   let plugins;
   if (type === 'icons') {
-    src = `src/${type}/${size}/*.svg`;
+    src = `src/${type}/${artworkSize}/*.svg`;
     dest = `dist/js/${type}/${size}`;
     plugins = [
       ...iconsPlugins,
@@ -142,6 +142,7 @@ gulp.task('optimise-xxxlarge-icons', () =>
 
 gulp.task('icons', () =>
   ordered([
+    iconReactComponents('icons', 'xs', 'sm'),
     iconReactComponents('icons', 'sm'),
     iconReactComponents('icons', 'lg'),
     iconReactComponents('icons', 'xxxl'),

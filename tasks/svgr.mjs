@@ -11,6 +11,7 @@ const PLUGIN_NAME = "svgr"
 
 export default function svgrPipe (options) {
   const sizeMapping = {
+    xs: '0.5rem',
     sm: '1rem',
     lg: '1.5rem',
     xl: '2rem',

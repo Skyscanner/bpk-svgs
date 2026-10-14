@@ -21,17 +21,20 @@ import path from 'path';
 
 const createIconMapping = (cb) => {
   const iconMapping = {};
-  const sm = fs
+  const smIconNames = fs
     .readdirSync('./src/icons/sm')
-    .map((name) => `${path.basename(name, '.svg')}-sm`);
-  const lg = fs
+    .map((name) => path.basename(name, '.svg'));
+  const lgIconNames = fs
     .readdirSync('./src/icons/lg')
     .map((name) => path.basename(name, '.svg'));
+  const xs = smIconNames.map((name) => `${name}-xs`);
+  const sm = smIconNames.map((name) => `${name}-sm`);
+  const lg = lgIconNames;
   const xxxl = fs
     .readdirSync('./src/icons/xxxl')
     .map((name) => `${path.basename(name, '.svg')}-xxxl`);
 
-  [sm, lg, xxxl].forEach((size) => {
+  [xs, sm, lg, xxxl].forEach((size) => {
     size.forEach((iconName) => {
       iconMapping[iconName] = iconName;
     });
