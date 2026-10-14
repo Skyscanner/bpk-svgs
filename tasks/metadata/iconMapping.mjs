@@ -27,9 +27,7 @@ const createIconMapping = (cb) => {
   const lgIconNames = fs
     .readdirSync('./src/icons/lg')
     .map((name) => path.basename(name, '.svg'));
-  const xs = [...new Set([...smIconNames, ...lgIconNames])].map(
-    (name) => `${name}-xs`,
-  );
+  const xs = smIconNames.map((name) => `${name}-xs`);
   const sm = smIconNames.map((name) => `${name}-sm`);
   const lg = lgIconNames;
   const xxxl = fs

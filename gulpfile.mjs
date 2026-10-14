@@ -16,8 +16,6 @@
 //  * limitations under the License.
 //  */
 
-import fs from 'fs';
-
 import { deleteAsync } from 'del';
 import gulp from 'gulp';
 import chmod from 'gulp-chmod';
@@ -63,22 +61,12 @@ const optimizeSvg = (size) => gulp.src(`src/icons/${size}/**/*.svg`)
 
 gulp.task('clean', () => deleteAsync(['dist']));
 
-const extraSmallIconSources = () => {
-  const smallIconNames = new Set(fs.readdirSync('src/icons/sm'));
-  const largeOnlyIcons = fs
-    .readdirSync('src/icons/lg')
-    .filter((iconName) => !smallIconNames.has(iconName))
-    .map((iconName) => `src/icons/lg/${iconName}`);
-
-  return [...largeOnlyIcons, 'src/icons/sm/*.svg'];
-};
-
-const iconReactComponents = (type, size, sourcePaths) => {
+const iconReactComponents = (type, size, artworkSize = size) => {
   let src;
   let dest;
   let plugins;
   if (type === 'icons') {
-    src = sourcePaths || `src/${type}/${size}/*.svg`;
+    src = `src/${type}/${artworkSize}/*.svg`;
     dest = `dist/js/${type}/${size}`;
     plugins = [
       ...iconsPlugins,
@@ -154,7 +142,7 @@ gulp.task('optimise-xxxlarge-icons', () =>
 
 gulp.task('icons', () =>
   ordered([
-    iconReactComponents('icons', 'xs', extraSmallIconSources()),
+    iconReactComponents('icons', 'xs', 'sm'),
     iconReactComponents('icons', 'sm'),
     iconReactComponents('icons', 'lg'),
     iconReactComponents('icons', 'xxxl'),
